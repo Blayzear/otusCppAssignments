@@ -1,0 +1,1 @@
+int getGuessNumber(int difficulty);
