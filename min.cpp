@@ -3,7 +3,7 @@
 Minimum::Minimum() : _myValue{ std::numeric_limits<double>::min() } {}
 
 void Minimum::update(double next) {
-	if (next < _myValue) {
+	if (next < _myValue || _myValue == std::numeric_limits<double>::min()) {
 		_myValue = next;
 	}
 }

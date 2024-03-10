@@ -3,19 +3,12 @@
 
 int main() {
 	const size_t statistics_count = 6;
-	IStatistics* statistics[statistics_count];
-
-	statistics[0] = new Minimum{};
-	statistics[1] = new Maximum{};
-	statistics[2] = new Mean{};
-	statistics[3] = new StandardDeviation{};
-	statistics[4] = new Quantile{90};
-	statistics[5] = new Quantile{95};
+	IStatistics* statistics[statistics_count] = { new Minimum(), new Maximum(), new Mean(), new StandardDeviation(), new Quantile(90), new Quantile(95) };
 
 	double val = 0;
 	while (std::cin >> val) {
 		for (size_t i = 0; i < statistics_count; ++i) {
-			statistics[i]->update(val);
+			statistics[i]->update(static_cast<double> (val));
 		}
 	}
 
