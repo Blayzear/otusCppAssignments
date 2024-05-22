@@ -7,6 +7,12 @@
  */
 void Ball::setVelocity(const Velocity& velocity) {
     // TODO: место для доработки
+    this->myVelocity = velocity;
+}
+
+void Ball::setVelocity(double x, double y) {
+    // TODO: место для доработки
+    this->myVelocity = Velocity(Point(x, y));
 }
 
 /**
@@ -14,7 +20,7 @@ void Ball::setVelocity(const Velocity& velocity) {
  */
 Velocity Ball::getVelocity() const {
     // TODO: место для доработки
-    return {};
+    return this->myVelocity;
 }
 
 /**
@@ -27,6 +33,7 @@ Velocity Ball::getVelocity() const {
  */
 void Ball::draw(Painter& painter) const {
     // TODO: место для доработки
+    painter.draw(this->myCenter, this->myRadius, this->myColor);
 }
 
 /**
@@ -35,6 +42,12 @@ void Ball::draw(Painter& painter) const {
  */
 void Ball::setCenter(const Point& center) {
     // TODO: место для доработки
+    this->myCenter = center;
+}
+
+void Ball::setCenter(double x, double y) {
+    // TODO: место для доработки
+    this->myCenter = Point(x, y);
 }
 
 /**
@@ -42,7 +55,7 @@ void Ball::setCenter(const Point& center) {
  */
 Point Ball::getCenter() const {
     // TODO: место для доработки
-    return {};
+    return this->myCenter;
 }
 
 /**
@@ -52,7 +65,7 @@ Point Ball::getCenter() const {
  */
 double Ball::getRadius() const {
     // TODO: место для доработки
-    return {};
+    return this->myRadius;
 }
 
 /**
@@ -64,5 +77,21 @@ double Ball::getRadius() const {
  */
 double Ball::getMass() const {
     // TODO: место для доработки
-    return {};
+    return (3.14159265358979323846 * std::pow(this->myRadius, 3) * (4 / 3));
+}
+
+void Ball::setColor(double red, double green, double blue) {
+    this->myColor = Color{red, green, blue};
+}
+
+void Ball::setColor(Color color) {
+    this->myColor = color;
+}
+
+bool Ball::isCollidable() const {
+    return this->collidable;
+}
+
+void Ball::setCollidable(bool collidable) {
+    this->collidable = collidable;
 }
