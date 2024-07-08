@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
-set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
-project(helloworld VERSION ${PROJECT_VESRION})
+project(helloworld VERSION ${PROJECT_VERSION})
 
 option(WITH_BOOST_TEST "Whether to build Boost test" ON)
+option(WITH_G_TEST "Whether to build Google test" ON)
 
 configure_file(version.h.in version.h)
 
@@ -43,6 +44,25 @@ if(WITH_BOOST_TEST)
         ${Boost_LIBRARIES}
         helloworld
     )
+endif()
+
+if(WITH_G_TEST)
+    find_package(GTest)
+    add_executable(test_version_gt test_version_gt.cpp)
+    target_include_directories(
+    test_version_gt PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+    set_target_properties(test_version_gt PROPERTIES
+        CXX_STANDARD 14
+        CXX_STANDARD_REQUIRED ON
+    )
+
+    set_target_properties(test_version_gt PROPERTIES
+        INCLUDE_DIRECTORIES "${GTEST_INCLUDE_DIRS}"
+    )
+
+    target_link_libraries(test_version_gt GTest::GTest GTest::Main helloworld)
 endif()
 
 if (MSVC)
@@ -83,4 +103,9 @@ include(CPack)
 if(WITH_BOOST_TEST)
     enable_testing()
     add_test(test_version test_version)
+endif()
+
+if(WITH_G_TEST)
+    enable_testing()
+    add_test(test_version_gt test_version_gt)
 endif()
